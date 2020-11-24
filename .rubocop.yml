@@ -1,0 +1,44 @@
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Good documentation welcome, but not required
+Style/Documentation:
+  Enabled: false
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: false
+
+Style/HashTransformValues:
+  Enabled: false
+
+Security/Eval:
+  Enabled: false
+
+Style/LambdaCall:
+  Enabled:
+    EnforcedStyle: braces
+
+Style/RedundantSelf:
+  Enabled: false
+
+Style/MultilineMethodCallIndentation:
+  Enabled:
+    EnforcedStyle: indented
+
+Layout/LineLength:
+  Enabled:
+    max: 100
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*.rb
+
+Metrics/AbcSize:
+  Exclude:
+    - lib/lazy_names.rb

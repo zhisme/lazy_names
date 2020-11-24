@@ -1,0 +1,4 @@
+---
+my_awesome_project:
+  definitions:
+    'Models::Users::CreditCard': 'MUCC'
