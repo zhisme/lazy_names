@@ -1,11 +1,12 @@
 # LazyNames
 
-LazyNames helps programmer to type faster very-long classes names, constants by defining them on a shorter version. If you are lazy like me typing many times a day in console long constant then this gem will ease your development process.
+LazyNames helps programmer to type faster very-long classes names, constants by defining them on a shorter version.   
+If you are lazy like me typing many times a day in console long constant then this gem will ease your development process.
 
 ## Why
 
-Consider this example from pry terminal session
-![Lazy names in action](https://monosnap.com/image/kBCESY7wtH2BRtRp7Ka07dbUGVhr7o)
+Consider this example from pry terminal session.  
+![Lazy names in action](https://media.giphy.com/media/7CtRJfp2yocsOu9zEA/source.gif)
 
 ## Installation
 
@@ -19,7 +20,7 @@ end
 
 2. Setup your console to automatically load lazy names
 
-2.1. If you are using pry, add this line to ~/.pryrc or per project myproject/.pryrc
+2.1. If you are using pry, add this line to `~/.pryrc` or per project `myproject/.pryrc`
 
 ```ruby
 if defined?(LazyNames)
@@ -29,7 +30,7 @@ if defined?(LazyNames)
 end
 ```
 
-2.2 If you are using irb, add this line to ~/.irbrc or per project myproject/.irbrc
+2.2 If you are using irb, add this line to `~/.irbrc` or per project `myproject/.irbrc`
 
 ```ruby
 if defined?(LazyNames)
@@ -47,7 +48,7 @@ end
 5. Login into your rails or non-rails console
 
     $ bundle exec rails c # or bin/console
-    # your shorter version of constants are available now, enjoy!
+    $ # your shorter version of constants are available now, enjoy!
 
 ## Development
 
