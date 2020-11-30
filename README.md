@@ -1,11 +1,11 @@
-# LazyNames
+# lazy_names
 
-LazyNames helps programmer to type faster very-long classes names, constants by defining them on a shorter version.   
+LazyNames helps programmer to type faster very-long classes names, constants by defining them on a shorter version.
 If you are lazy like me typing many times a day in console long constant then this gem will ease your development process.
 
 ## Why
 
-Consider this example from pry terminal session.  
+Consider this example from pry terminal session.
 ![Lazy names in action](https://media.giphy.com/media/7CtRJfp2yocsOu9zEA/source.gif)
 
 ## Installation
@@ -52,6 +52,44 @@ cp .lazy_names.tt.yml ~/.lazy_names.yml
 $ bundle exec rails c # or bin/console
 # your shorter version of constants are available now, enjoy!
 ```
+
+## Configuration
+Take a look onto `lazy_names.tt.yml` it has very basic template for you to start.
+
+```yml
+---
+my_awesome_project:
+  definitions:
+    'Models::Users::CreditCard': 'MUCC'
+```
+`my_awesome_project` should be you project/folder name
+
+So consider this example:
+```sh
+$ pwd
+/Users/name/my_awesome_project
+```
+The last folder name of you ruby project must match the same one in your configuration.  
+After **definitions** sections you can actually redefine your long constants.  
+So in this example `Models::Users::CreditCard` is your real project constant and   
+`MUCC` will be your short variant of it, so you can access `Models::Users::CreditCard`   
+from `MUCC`. `MUCC` and any other right hand side can be any value, you define the best-suitable names.  
+
+You can define as many constants as you want. The same rule applies for projects.   
+Your config can have multiple constant definitions per namespace.  
+```yml
+---
+my_awesome_project:
+  definitions:
+    'Models::Users::CreditCard': 'MUCC'
+my_another_project:
+  definitions:
+    'OtherLongConst': 'Short'
+```
+
+However you can put your `.lazy_names.yml` config directly to project folder, it will be looked up firstly from project.  
+Just do not forget to put in your `.gitignore`. I believe every developer defines shorter versions of constants by his own opinion.  
+If project folder doesn't contain any `.lazy_names.yml`, it will fallback to home directory.  
 
 ## Development
 
