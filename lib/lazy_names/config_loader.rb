@@ -5,6 +5,7 @@ module LazyNames
     class NoConfig < StandardError; end
     class ConfigNotResolved < StandardError; end
     class NamespaceNotFound < StandardError; end
+    class NoDefinitions < StandardError; end
 
     class << self
       BasicConfig = Struct.new(:path, :definitions)
@@ -13,7 +14,7 @@ module LazyNames
       def call(namespace:, path: nil)
         return read_from_path(namespace, path) if path
 
-        config = read_from_project(namespace)
+        config = read_from_project if config_in_project_path?
         config ||= read_from_home_dir(namespace)
 
         config
@@ -38,19 +39,33 @@ module LazyNames
           'Create ~/.lazy_names.yml'
       end
 
-      def read_from_project(namespace)
-        return false unless config_in_project_path?
-
-        definitions = find_definitions(project_path, namespace)
+      def read_from_project
+        definitions = find_project_definitions
 
         BasicConfig.new(project_path, definitions)
       end
 
-      def find_definitions(path, namespace)
-        read_config(path)[namespace]['definitions'].to_h
+      def find_project_definitions
+        read_config(project_path)['definitions'].to_hash
 
       rescue NoMethodError
-        raise NamespaceNotFound
+        raise NoDefinitions, "No definitions found in #{project_path}. " \
+          'See config example .lazy_names.tt.project.yml'
+      end
+
+      def find_definitions(path, namespace)
+        find_namespace_contents(path, namespace)['definitions'].to_hash
+
+      rescue NoMethodError
+        raise NoDefinitions, "No definitions found in #{path}. " \
+          'See config example in .lazy_names.tt.yml'
+      end
+
+      def find_namespace_contents(path, namespace)
+        read_config(path)[namespace].to_hash
+      rescue NoMethodError
+        raise NamespaceNotFound, "No namespace found in #{path}. " \
+          'See config example in .lazy_names.tt.yml and check README'
       end
 
       def config_in_project_path?

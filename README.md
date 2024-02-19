@@ -54,6 +54,9 @@ $ bundle exec rails c # or bin/console
 ```
 
 ## Configuration
+
+### Global definition
+
 Take a look onto `lazy_names.tt.yml` it has very basic template for you to start.
 
 ```yml
@@ -69,14 +72,14 @@ So consider this example:
 $ pwd
 /Users/name/my_awesome_project
 ```
-The last folder name of you ruby project must match the same one in your configuration.  
-After **definitions** sections you can actually redefine your long constants.  
-So in this example `Models::Users::CreditCard` is your real project constant and   
-`MUCC` will be your short variant of it, so you can access `Models::Users::CreditCard`   
-from `MUCC`. `MUCC` and any other right hand side can be any value, you define the best-suitable names.  
+The last folder name of you ruby project must match the same one in your configuration.
+After **definitions** sections you can actually redefine your long constants.
+So in this example `Models::Users::CreditCard` is your real project constant and
+`MUCC` will be your short variant of it, so you can access `Models::Users::CreditCard`
+from `MUCC`. `MUCC` and any other right hand side can be any value, you define the best-suitable names.
 
-You can define as many constants as you want. The same rule applies for projects.   
-Your config can have multiple constant definitions per namespace.  
+You can define as many constants as you want. The same rule applies for projects.
+Your config can have multiple constant definitions per namespace.
 ```yml
 ---
 my_awesome_project:
@@ -87,9 +90,22 @@ my_another_project:
     'OtherLongConst': 'Short'
 ```
 
-However you can put your `.lazy_names.yml` config directly to project folder, it will be looked up firstly from project.  
-Just do not forget to put in your `.gitignore`. I believe every developer defines shorter versions of constants by his own opinion.  
-If project folder doesn't contain any `.lazy_names.yml`, it will fallback to home directory.  
+### Project definitions
+
+In the meantime you can put your `.lazy_names.yml` config directly to project folder, it will be looked up firstly from project.
+Just do not forget to put in your `.gitignore`. I believe every developer defines shorter versions of constants by his own opinion.
+```sh
+echo '.lazy_names.yml' >> .gitignore
+```
+If project folder doesn't contain any `.lazy_names.yml`, it will fallback to home directory.
+
+Configuration per project a bit different: you don't need to specify global scope `my_awesome_project`, you can skip forward to definitions
+```yml
+---
+definitions:
+  'Models::Users::CreditCard: 'MUCC'
+```
+Example config can be found in `.lazy_names.tt.project.yml`
 
 ## Development
 

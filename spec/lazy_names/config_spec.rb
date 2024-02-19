@@ -5,7 +5,7 @@ require 'support/shared_context/with_config_contents'
 
 RSpec.describe LazyNames::Config do
   include_context 'with paths'
-  include_context 'with valid contents'
+  include_context 'with valid namespaced contents'
 
   let(:config) { described_class.new(definitions, project_path) }
 
