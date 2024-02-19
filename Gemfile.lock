@@ -1,14 +1,13 @@
 PATH
   remote: .
   specs:
-    lazy_names (0.0.1)
+    lazy_names (0.1.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
     coderay (1.1.3)
     diff-lcs (1.3)
-    fakefs (1.2.1)
     method_source (1.0.0)
     pry (0.13.1)
       coderay (~> 1.1)
@@ -33,7 +32,6 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.16)
-  fakefs (~> 1.2)
   lazy_names!
   pry (~> 0.13)
   rake (~> 10.0)

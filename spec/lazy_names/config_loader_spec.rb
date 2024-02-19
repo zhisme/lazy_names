@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'lazy_names/config_loader'
 require 'support/shared_examples/expected_path'
+require 'support/shared_examples/no_definitions'
 require 'support/shared_context/with_paths'
 require 'support/shared_context/with_config_contents'
 
@@ -9,7 +10,7 @@ RSpec.describe LazyNames::ConfigLoader do
     subject { described_class.call(namespace: namespace, path: path) }
 
     include_context 'with paths'
-    include_context 'with valid contents'
+    include_context 'with valid namespaced contents'
 
     let(:path) { nil }
 
@@ -22,8 +23,9 @@ RSpec.describe LazyNames::ConfigLoader do
 
       context 'when namespace' do
         context 'matches config' do
-          it { should be_a(Struct) }
-          it { expect { subject }.to_not raise_error }
+          context 'with no definitions found' do
+            include_examples 'raises NoDefinitions error'
+          end
         end
 
         context 'not matches config' do
@@ -50,6 +52,16 @@ RSpec.describe LazyNames::ConfigLoader do
         let(:path) { invalid_path }
 
         it { expect { subject }.to raise_error(described_class::NoConfig) }
+
+        context 'with no definitions found' do
+          include_context 'with malformed contents'
+
+          let(:path) { valid_path }
+
+          before { allow(described_class).to receive(:read_config).with(path).and_return(config_contents) }
+
+          include_examples 'raises NoDefinitions error'
+        end
       end
     end
 
@@ -60,9 +72,9 @@ RSpec.describe LazyNames::ConfigLoader do
         allow(described_class).to receive(:read_config).with(project_path).and_return(config_contents)
       end
 
-      it { expect(subject).to be_a(Struct) }
-
       context 'when valid' do
+        include_context 'with valid project contents'
+
         let(:expected_path) { project_path }
 
         include_examples 'returns expected path'
@@ -78,6 +90,14 @@ RSpec.describe LazyNames::ConfigLoader do
         end
 
         include_examples 'returns expected path'
+
+        context 'when config contents malformed' do
+          before do
+            allow(described_class).to receive(:config_in_project_path?).and_return(true)
+          end
+
+          include_examples 'raises NoDefinitions error'
+        end
       end
     end
 
