@@ -19,9 +19,10 @@ RSpec.describe LazyNames::ConfigLoader do
 
       let(:path) { valid_path }
 
-      before { allow(described_class).to receive(:read_config).with(path).and_return(config_contents) }
 
       context 'when namespace' do
+        before { allow(described_class).to receive(:read_config).with(path).and_return(config_contents) }
+
         context 'matches config' do
           context 'with no definitions found' do
             include_examples 'raises NoDefinitions error'
@@ -33,6 +34,14 @@ RSpec.describe LazyNames::ConfigLoader do
 
           it { expect { subject }.to raise_error(described_class::NamespaceNotFound) }
         end
+      end
+
+      context 'when config can not be parsed' do
+        before { allow(File).to receive(:read).with(path).and_return(file_contents) }
+
+        include_context 'with psych not parseable file content'
+
+        it { expect { subject }.to raise_error(described_class::YAMLConfigInvalid) }
       end
     end
 
