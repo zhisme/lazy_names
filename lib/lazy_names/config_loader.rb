@@ -3,6 +3,7 @@ require 'yaml'
 module LazyNames
   class ConfigLoader
     class NoConfig < StandardError; end
+    class YAMLConfigInvalid < StandardError; end
     class ConfigNotResolved < StandardError; end
     class NamespaceNotFound < StandardError; end
     class NoDefinitions < StandardError; end
@@ -74,6 +75,9 @@ module LazyNames
 
       def read_config(path)
         YAML.safe_load(File.read(path))
+
+      rescue Psych::SyntaxError => e
+        raise YAMLConfigInvalid, e
       end
 
       def project_path

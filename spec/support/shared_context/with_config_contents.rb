@@ -22,6 +22,10 @@ RSpec.shared_context 'with malformed contents' do
   let(:namespace) { 'lazy_names' }
 end
 
+RSpec.shared_context 'with psych not parseable file content' do
+  let(:file_contents) { "--\nlazy_names:\n invalid" }
+end
+
 RSpec.shared_context 'with wrong namespace' do
   let(:config_contents) { YAML.safe_load("---\nlazy_names:\n  definitions:\n    'User::CreditCard': UCC\n    'User::CompanyCredit': UCC\n") }
   let(:definitions) { config_contents[namespace]['definitions'] }
