@@ -1,4 +1,9 @@
+plugins:
+- rubocop-rake
+- rubocop-rspec
+
 AllCops:
+  TargetRubyVersion: 2.7
   NewCops: enable
 
 # Good documentation welcome, but not required
@@ -31,3 +36,6 @@ Layout/LineLength:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*.rb
+
+RSpec/NestedGroups:
+  Enabled: false

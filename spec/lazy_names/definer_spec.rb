@@ -9,7 +9,7 @@ end
 
 RSpec.describe LazyNames::Definer do
   describe '.call' do
-    subject { described_class.call(config, binding) }
+    subject(:definer) { described_class.call(config, binding) }
 
     include_context 'with config'
 
@@ -18,8 +18,10 @@ RSpec.describe LazyNames::Definer do
     context 'when valid' do
       let(:lazy_names) { ['LN_MC'] }
 
+      it { expect { definer }.not_to raise_error }
+
       it 'defines constant by lazy name' do
-        expect { subject }.to_not raise_error
+        definer
         expect(LN_MC).to eq(LazyNames::MyClass)
       end
     end
@@ -29,7 +31,7 @@ RSpec.describe LazyNames::Definer do
       let(:constants) { ['LazyNames::AnotherClass'] }
 
       it 'fails if origin is undefined' do
-        expect { subject }.to raise_error(NameError)
+        expect { definer }.to raise_error(NameError)
       end
     end
   end

@@ -6,24 +6,24 @@ RSpec.describe LazyNames::FindNamespace do
   describe '.call' do
     subject { described_class.call(path) }
 
-    let(:path) { "/Users/my_projects/#{expected_name}" }
+    let(:path) { "/Users/my_projects/#{project_name}" }
 
     context 'when simple name' do
-      let(:expected_name) { 'awesome' }
+      let(:project_name) { 'awesome' }
 
-      it { expect(subject).to eq(expected_name) }
+      it { is_expected.to eq(project_name) }
     end
 
     context 'when dashes' do
-      let(:expected_name) { 'awesome_product' }
+      let(:project_name) { 'awesome_product' }
 
-      it { expect(subject).to eq(expected_name) }
+      it { is_expected.to eq(project_name) }
     end
 
     context 'when slashes' do
-      let(:expected_name) { '/my/project/inside/this/folder' }
+      let(:project_name) { '/my/project/inside/this/folder' }
 
-      it { expect(subject).to eq('folder') }
+      it { is_expected.to eq('folder') }
     end
   end
 end
