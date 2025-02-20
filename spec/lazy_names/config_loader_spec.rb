@@ -9,7 +9,7 @@ require 'support/shared_context/with_config_contents'
 
 RSpec.describe LazyNames::ConfigLoader do
   describe '.call' do
-    subject { described_class.call(namespace: namespace, path: path) }
+    subject(:config_loader) { described_class.call(namespace: namespace, path: path) }
 
     include_context 'with paths'
     include_context 'with valid namespaced contents'
@@ -24,16 +24,16 @@ RSpec.describe LazyNames::ConfigLoader do
       context 'when namespace' do
         before { allow(described_class).to receive(:read_config).with(path).and_return(config_contents) }
 
-        context 'matches config' do
+        context 'when matches config' do
           context 'with no definitions found' do
             include_examples 'raises NoDefinitions error'
           end
         end
 
-        context 'not matches config' do
+        context 'when not matches config' do
           include_context 'with wrong namespace'
 
-          it { expect { subject }.to raise_error(described_class::NamespaceNotFound) }
+          it { expect { config_loader }.to raise_error(described_class::NamespaceNotFound) }
         end
       end
 
@@ -42,7 +42,7 @@ RSpec.describe LazyNames::ConfigLoader do
 
         include_context 'with psych not parseable file content'
 
-        it { expect { subject }.to raise_error(described_class::YAMLConfigInvalid) }
+        it { expect { config_loader }.to raise_error(described_class::YAMLConfigInvalid) }
       end
     end
 
@@ -55,13 +55,13 @@ RSpec.describe LazyNames::ConfigLoader do
 
         include_examples 'returns expected path'
 
-        it { should be_a(Struct) }
+        it { is_expected.to be_a(Struct) }
       end
 
       context 'when invalid' do
         let(:path) { invalid_path }
 
-        it { expect { subject }.to raise_error(described_class::NoConfig) }
+        it { expect { config_loader }.to raise_error(described_class::NoConfig) }
 
         context 'with no definitions found' do
           include_context 'with malformed contents'
@@ -77,8 +77,7 @@ RSpec.describe LazyNames::ConfigLoader do
 
     context 'when project' do
       before do
-        allow(described_class).to receive(:project_path).and_return(project_path)
-        allow(described_class).to receive(:config_in_project_path?).and_return(true)
+        allow(described_class).to receive_messages(project_path: project_path, config_in_project_path?: true)
         allow(described_class).to receive(:read_config).with(project_path).and_return(config_contents)
       end
 
@@ -94,8 +93,7 @@ RSpec.describe LazyNames::ConfigLoader do
         let(:expected_path) { home_path }
 
         before do
-          allow(described_class).to receive(:config_in_project_path?).and_return(false)
-          allow(described_class).to receive(:home_path).and_return(home_path)
+          allow(described_class).to receive_messages(config_in_project_path?: false, home_path: home_path)
           allow(described_class).to receive(:read_config).with(home_path).and_return(config_contents)
         end
 
@@ -115,8 +113,7 @@ RSpec.describe LazyNames::ConfigLoader do
       let(:expected_path) { home_path }
 
       before do
-        allow(described_class).to receive(:read_from_project).and_return(false)
-        allow(described_class).to receive(:home_path).and_return(home_path)
+        allow(described_class).to receive_messages(read_from_project: false, home_path: home_path)
       end
 
       context 'when valid' do
@@ -126,11 +123,11 @@ RSpec.describe LazyNames::ConfigLoader do
 
         include_examples 'returns expected path'
 
-        it { expect(subject).to be_a(Struct) }
+        it { is_expected.to be_a(Struct) }
       end
 
       context 'when invalid' do
-        it { expect { subject }.to raise_error(described_class::NoConfig) }
+        it { expect { config_loader }.to raise_error(described_class::NoConfig) }
       end
     end
   end
