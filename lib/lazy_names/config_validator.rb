@@ -25,11 +25,9 @@ module LazyNames
 
     def validate_constants!
       constants.each do |c|
-        begin
-          resolve_const_in_project(c)
-        rescue NameError
-          self.errors.undefined << c
-        end
+        resolve_const_in_project(c)
+      rescue NameError
+        self.errors.undefined << c
       end
     end
 
