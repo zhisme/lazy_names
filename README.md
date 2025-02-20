@@ -1,3 +1,4 @@
+[![rake](https://github.com/zhisme/lazy_names/actions/workflows/rake.yml/badge.svg)](https://github.com/zhisme/lazy_names/actions/workflows/rake.yml)
 [![Gem Version](https://badge.fury.io/rb/lazy_names.svg?icon=si%3Arubygems)](https://badge.fury.io/rb/lazy_names)
 ![Gem Total Downloads](https://img.shields.io/gem/dt/lazy_names)
 [![Hits-of-Code](https://hitsofcode.com/github/zhisme/lazy_names?branch=master)](https://hitsofcode.com/github/zhisme/lazy_names/view?branch=master)
