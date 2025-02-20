@@ -1,3 +1,4 @@
+[![rake](https://github.com/zhisme/lazy_names/actions/workflows/rake.yml/badge.svg)](https://github.com/zhisme/lazy_names/actions/workflows/rake.yml)
 [![Gem Version](https://badge.fury.io/rb/lazy_names.svg?icon=si%3Arubygems)](https://badge.fury.io/rb/lazy_names)
 ![Gem Total Downloads](https://img.shields.io/gem/dt/lazy_names)
 [![Hits-of-Code](https://hitsofcode.com/github/zhisme/lazy_names?branch=master)](https://hitsofcode.com/github/zhisme/lazy_names/view?branch=master)
@@ -13,6 +14,7 @@ If you are lazy like me typing many times a day in console long constants then t
 
 Consider this example from pry terminal session.
 ![Lazy names in action](https://media.giphy.com/media/7CtRJfp2yocsOu9zEA/source.gif)
+
 The idea is to reduce typing of long namespaced constants to shorter versions. It's very useful when you have a lot of nested namespaces and you need to access them frequently. This gem will take your responsibility to redefine constants to shorter versions and making constant/classes validations.
 
 ## Installation
