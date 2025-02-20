@@ -7,7 +7,7 @@
 
 # lazy_names
 
-LazyNames helps programmer to type faster very-long class names, constants by defining them on a shorter version.
+lazy_names helps programmer to type faster very-long class names constants by defining them on a shorter version.
 If you are lazy like me typing many times a day in console long constants then this gem will ease your development process.
 
 ## Why
