@@ -1,3 +1,6 @@
+[![Gem Version](https://badge.fury.io/rb/lazy_names.svg?icon=si%3Arubygems)](https://badge.fury.io/rb/lazy_names)
+![Gem Total Downloads](https://img.shields.io/gem/dt/lazy_names?style=for-the-badge)
+[![Hits-of-Code](https://hitsofcode.com/github/zhisme/lazy_names?branch=master)](https://hitsofcode.com/github/zhisme/lazy_names/view?branch=master)
 # lazy_names
 
 LazyNames helps programmer to type faster very-long class names, constants by defining them on a shorter version.
