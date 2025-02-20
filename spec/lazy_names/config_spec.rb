@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'pry'
 require 'support/shared_context/with_paths'
@@ -54,7 +56,7 @@ RSpec.describe LazyNames::Config do
       before { allow(config.validator).to receive(:call).and_return(true) }
 
       it 'no definitions removed' do
-        expect { subject }.to_not change { config.errors }
+        expect { subject }.to_not(change { config.errors })
       end
     end
 

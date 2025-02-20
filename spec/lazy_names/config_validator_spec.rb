@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe LazyNames::ConfigValidator do
@@ -48,7 +50,7 @@ RSpec.describe LazyNames::ConfigValidator do
       end
 
       context 'invalid' do
-        let(:lazy_names) { ['Mmc', 'MMC', 'Mmc'] }
+        let(:lazy_names) { %w[Mmc MMC Mmc] }
 
         it { should be_a(described_class) }
         it { expect(subject.errors.undefined).to be_empty }

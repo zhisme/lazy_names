@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe LazyNames::FindNamespace do
   describe '.call' do
     subject { described_class.call(path) }
 
-    let(:path) { '/Users/my_projects/' + expected_name }
+    let(:path) { "/Users/my_projects/#{expected_name}" }
 
     context 'when simple name' do
       let(:expected_name) { 'awesome' }

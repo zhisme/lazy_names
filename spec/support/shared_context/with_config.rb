@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_context 'with config' do
   let(:config) { double(LazyNames::Config) }
   let(:constants) { ['LazyNames::MyClass'] }

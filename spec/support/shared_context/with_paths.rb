@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_context 'with paths' do
   let(:project_path) { '/my/project/.lazy_names.yml' }
   let(:home_path) { '/Users/me/.lazy_names.yml' }

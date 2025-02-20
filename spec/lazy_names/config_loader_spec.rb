@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'lazy_names/config_loader'
 require 'support/shared_examples/expected_path'
@@ -18,7 +20,6 @@ RSpec.describe LazyNames::ConfigLoader do
       include_context 'with malformed contents'
 
       let(:path) { valid_path }
-
 
       context 'when namespace' do
         before { allow(described_class).to receive(:read_config).with(path).and_return(config_contents) }
