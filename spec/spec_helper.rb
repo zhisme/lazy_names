@@ -1,6 +1,11 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
 require 'lazy_names'
 require 'pry'
+require 'simplecov'
+
+SimpleCov.start
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
 module LazyNames
@@ -10,7 +12,7 @@ module LazyNames
 
     class << self
       BasicConfig = Struct.new(:path, :definitions)
-      HOME_PATH = '~/.lazy_names.yml'.freeze
+      HOME_PATH = '~/.lazy_names.yml'
 
       def call(namespace:, path: nil)
         return read_from_path(namespace, path) if path
@@ -37,7 +39,7 @@ module LazyNames
         BasicConfig.new(home_path, definitions)
       rescue Errno::ENOENT
         raise NoConfig, 'No config found in your home directory. ' \
-          'Create ~/.lazy_names.yml'
+                        'Create ~/.lazy_names.yml'
       end
 
       def read_from_project
@@ -48,25 +50,23 @@ module LazyNames
 
       def find_project_definitions
         read_config(project_path)['definitions'].to_hash
-
       rescue NoMethodError
         raise NoDefinitions, "No definitions found in #{project_path}. " \
-          'See config example .lazy_names.tt.project.yml'
+                             'See config example .lazy_names.tt.project.yml'
       end
 
       def find_definitions(path, namespace)
         find_namespace_contents(path, namespace)['definitions'].to_hash
-
       rescue NoMethodError
         raise NoDefinitions, "No definitions found in #{path}. " \
-          'See config example in .lazy_names.tt.yml'
+                             'See config example in .lazy_names.tt.yml'
       end
 
       def find_namespace_contents(path, namespace)
         read_config(path)[namespace].to_hash
       rescue NoMethodError
         raise NamespaceNotFound, "No namespace found in #{path}. " \
-          'See config example in .lazy_names.tt.yml and check README'
+                                 'See config example in .lazy_names.tt.yml and check README'
       end
 
       def config_in_project_path?
@@ -75,7 +75,6 @@ module LazyNames
 
       def read_config(path)
         YAML.safe_load(File.read(path))
-
       rescue Psych::SyntaxError => e
         raise YAMLConfigInvalid, e
       end

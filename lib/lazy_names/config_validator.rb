@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module LazyNames
   class ConfigValidator
     attr_reader :errors

@@ -1,5 +1,11 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'support/shared_context/with_config'
+
+module LazyNames
+  class MyClass; end # rubocop:disable Lint/EmptyClass
+end
 
 RSpec.describe LazyNames::Definer do
   describe '.call' do
@@ -11,10 +17,6 @@ RSpec.describe LazyNames::Definer do
 
     context 'when valid' do
       let(:lazy_names) { ['LN_MC'] }
-
-      before do
-        class LazyNames::MyClass; end
-      end
 
       it 'defines constant by lazy name' do
         expect { subject }.to_not raise_error

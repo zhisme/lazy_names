@@ -1,5 +1,5 @@
-Style/FrozenStringLiteralComment:
-  Enabled: false
+AllCops:
+  NewCops: enable
 
 # Good documentation welcome, but not required
 Style/Documentation:
@@ -17,19 +17,12 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: false
 
-Security/Eval:
-  Enabled: false
-
 Style/LambdaCall:
   Enabled:
     EnforcedStyle: braces
 
 Style/RedundantSelf:
   Enabled: false
-
-Style/MultilineMethodCallIndentation:
-  Enabled:
-    EnforcedStyle: indented
 
 Layout/LineLength:
   Enabled:
@@ -38,7 +31,3 @@ Layout/LineLength:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*.rb
-
-Metrics/AbcSize:
-  Exclude:
-    - lib/lazy_names.rb

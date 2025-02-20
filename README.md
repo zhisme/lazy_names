@@ -1,3 +1,9 @@
+[![Gem Version](https://badge.fury.io/rb/lazy_names.svg?icon=si%3Arubygems)](https://badge.fury.io/rb/lazy_names)
+![Gem Total Downloads](https://img.shields.io/gem/dt/lazy_names)
+[![Hits-of-Code](https://hitsofcode.com/github/zhisme/lazy_names?branch=master)](https://hitsofcode.com/github/zhisme/lazy_names/view?branch=master)
+![Codecov](https://img.shields.io/codecov/c/github/zhisme/lazy_names)
+![GitHub License](https://img.shields.io/github/license/zhisme/lazy_names)
+
 # lazy_names
 
 LazyNames helps programmer to type faster very-long class names, constants by defining them on a shorter version.
@@ -7,6 +13,7 @@ If you are lazy like me typing many times a day in console long constants then t
 
 Consider this example from pry terminal session.
 ![Lazy names in action](https://media.giphy.com/media/7CtRJfp2yocsOu9zEA/source.gif)
+The idea is to reduce typing of long namespaced constants to shorter versions. It's very useful when you have a lot of nested namespaces and you need to access them frequently. This gem will take your responsibility to redefine constants to shorter versions and making constant/classes validations.
 
 ## Installation
 
@@ -110,12 +117,14 @@ Example config can be found in `.lazy_names.tt.project.yml`
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After you make changes ensure to run `rake rubocop` to check if your code meets linter standards.
 
 To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/zhisme/lazy_names.
+Ensure the CI build is green by validating tests are passing and coverage is not decreased.
 
 ## License
 

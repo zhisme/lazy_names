@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_context 'with valid namespaced contents' do
   let(:config_contents) { YAML.safe_load("---\nlazy_names:\n  definitions:\n    'User::CreditCard': 'UCC'") }
   let(:already_defined_contents) { YAML.safe_load("---\nlazy_names:\n  definitions:\n    'User::CreditCard': UCC\n    'User::CreditCard': UsCard\n") }
