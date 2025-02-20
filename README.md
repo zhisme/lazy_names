@@ -2,7 +2,7 @@
 [![Gem Version](https://badge.fury.io/rb/lazy_names.svg?icon=si%3Arubygems)](https://badge.fury.io/rb/lazy_names)
 ![Gem Total Downloads](https://img.shields.io/gem/dt/lazy_names)
 [![Hits-of-Code](https://hitsofcode.com/github/zhisme/lazy_names?branch=master)](https://hitsofcode.com/github/zhisme/lazy_names/view?branch=master)
-![Codecov](https://img.shields.io/codecov/c/github/zhisme/lazy_names)
+[![codecov](https://codecov.io/gh/zhisme/lazy_names/graph/badge.svg?token=ZQXGBALJSK)](https://codecov.io/gh/zhisme/lazy_names)
 ![GitHub License](https://img.shields.io/github/license/zhisme/lazy_names)
 
 # lazy_names
