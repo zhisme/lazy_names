@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'yaml'
+
+def convert_yaml_to_ruby
+  yaml_file = '.lazy_names.yml'
+  ruby_file = '.lazy_names.rb'
+
+  unless File.exist?(yaml_file)
+    puts "No #{yaml_file} found in current directory"
+    exit 1
+  end
+
+  if File.exist?(ruby_file)
+    puts "#{ruby_file} already exists. Remove it first or merge manually."
+    exit 1
+  end
+
+  begin
+    yaml = YAML.load_file(yaml_file)
+    definitions = extract_definitions(yaml)
+
+    if definitions.empty?
+      puts "No definitions found in #{yaml_file}"
+      exit 1
+    end
+
+    File.open(ruby_file, 'w') do |f|
+      f.puts "# Converted from .lazy_names.yml"
+      f.puts ""
+      definitions.each do |full, short|
+        f.puts "#{short} = #{full}"
+      end
+    end
+
+    puts "✓ Converted #{definitions.size} definitions to #{ruby_file}"
+    puts ""
+    puts "Next steps:"
+    puts "  1. Review #{ruby_file}"
+    puts "  2. Delete #{yaml_file}"
+    puts "  3. Update lazy_names gem to v2.0"
+  rescue => e
+    puts "Error: #{e.message}"
+    exit 1
+  end
+end
+
+def extract_definitions(yaml)
+  if yaml['definitions']
+    yaml['definitions']
+  elsif yaml.is_a?(Hash) && yaml.values.first.is_a?(Hash)
+    yaml.values.first['definitions'] || {}
+  else
+    {}
+  end
+end
+
+convert_yaml_to_ruby

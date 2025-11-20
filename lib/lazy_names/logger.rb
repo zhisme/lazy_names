@@ -3,6 +3,14 @@
 module LazyNames
   class Logger
     class << self
+      def info(message)
+        puts message
+      end
+
+      def warn(message)
+        Kernel.warn(message)
+      end
+
       def warn_undefined(errors, config_path)
         return if errors.empty?
 
@@ -14,7 +22,7 @@ module LazyNames
           \n
         MSG
 
-        warn(message)
+        Kernel.warn(message)
       end
 
       def warn_duplicate_definition(errors, config_path)
@@ -29,7 +37,7 @@ module LazyNames
           \n
         MSG
 
-        warn(message)
+        Kernel.warn(message)
       end
 
       def warn_empty_definitions(errors, config_path)
@@ -43,7 +51,7 @@ module LazyNames
           or check .lazy_names.tt.yml for consistency.
         MSG
 
-        warn(message)
+        Kernel.warn(message)
       end
     end
   end

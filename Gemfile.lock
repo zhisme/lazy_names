@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lazy_names (1.0.0)
+    lazy_names (2.0.0)
 
 GEM
   remote: https://rubygems.org/
