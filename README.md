@@ -17,6 +17,16 @@ Consider this example from pry terminal session.
 
 The idea is to reduce typing of long namespaced constants to shorter versions. It's very useful when you have a lot of nested namespaces and you need to access them frequently. This gem will take your responsibility to redefine constants to shorter versions and making constant/classes validations.
 
+## Why Plain Ruby? (v2.0+)
+
+LazyNames v2.0 uses plain Ruby instead of YAML because:
+
+- ✅ **Intuitive**: Same syntax you'd write in `.irbrc`/`.pryrc`
+- ✅ **IDE Support**: Syntax highlighting and autocomplete work out of the box
+- ✅ **Validation**: Constants are validated at load time
+- ✅ **Simpler**: No YAML parsing, no extra abstraction
+- ✅ **Ruby-native**: Write Ruby to configure Ruby
+
 ## Installation
 
 1. Add this line to your application's Gemfile:
@@ -53,7 +63,9 @@ bundle
 
 4. Create your own lazy_names config where you define constants
 ```bash
-cp .lazy_names.tt.yml ~/.lazy_names.yml
+touch ~/.lazy_names.rb
+# or for project-specific config
+touch .lazy_names.rb
 ```
 
 5. Login into your rails or non-rails console
@@ -64,57 +76,80 @@ $ bundle exec rails c # or bin/console
 
 ## Configuration
 
-### Global definition
+Create a `.lazy_names.rb` file in your project root or home directory:
 
-Take a look onto `lazy_names.tt.yml` it has very basic template for you to start.
-
-```yml
----
-my_awesome_project:
-  definitions:
-    'Models::Users::CreditCard': 'MUCC'
+```ruby
+# .lazy_names.rb
+MUCC = Models::Users::CreditCard
+SPP = Services::PaymentProcessor
+CAVUC = Controllers::API::V1::UsersController
 ```
-`my_awesome_project` should be you project/folder name
 
-So consider this example:
+### File Lookup Priority
+
+LazyNames looks for configuration in this order:
+
+1. `./.lazy_names.rb` (project-specific)
+2. `~/.lazy_names.rb` (global)
+
+### Project-Specific Configuration
+
+For project-specific shortcuts, create `.lazy_names.rb` in your project root:
+
+```ruby
+# myproject/.lazy_names.rb
+MUCC = Models::Users::CreditCard
+SPP = Services::PaymentProcessor
+```
+
+Don't forget to add it to `.gitignore`:
 ```sh
-$ pwd
-/Users/name/my_awesome_project
-```
-The last folder name of you ruby project must match the same one in your configuration.
-After **definitions** sections you can actually redefine your long constants.
-So in this example `Models::Users::CreditCard` is your real project constant and
-`MUCC` will be your short variant of it, so you can access `Models::Users::CreditCard`
-from `MUCC`. `MUCC` and any other right hand side can be any value, you define the best-suitable names.
-
-You can define as many constants as you want. The same rule applies for projects.
-Your config can have multiple constant definitions per namespace.
-```yml
----
-my_awesome_project:
-  definitions:
-    'Models::Users::CreditCard': 'MUCC'
-my_another_project:
-  definitions:
-    'OtherLongConst': 'Short'
+echo '.lazy_names.rb' >> .gitignore
 ```
 
-### Project definitions
+### Global Configuration
 
-In the meantime you can put your `.lazy_names.yml` config directly to project folder, it will be looked up firstly from project.
-Just do not forget to put in your `.gitignore`. I believe every developer defines shorter versions of constants by his own opinion.
-```sh
-echo '.lazy_names.yml' >> .gitignore
-```
-If project folder doesn't contain any `.lazy_names.yml`, it will fallback to home directory.
+For shortcuts across all projects, create `~/.lazy_names.rb` in your home directory:
 
-Configuration per project a bit different: you don't need to specify global scope `my_awesome_project`, you can skip forward to definitions
-```yml
----
-definitions:
-  'Models::Users::CreditCard: 'MUCC'
+```ruby
+# ~/.lazy_names.rb
+# Add constants you use across multiple projects
+AR = ActiveRecord
+AM = ActionMailer
 ```
-Example config can be found in `.lazy_names.tt.project.yml`
+
+### Validation
+
+LazyNames validates each line:
+
+- ✅ Must be a constant assignment: `SHORT = Full::Constant::Path`
+- ✅ Constant must exist in your application
+- ⚠️ Invalid lines are skipped with a warning
+
+### Examples
+
+```ruby
+# Comments are allowed
+MUCC = Models::Users::CreditCard
+
+# Blank lines are fine
+
+SPP = Services::PaymentProcessor
+
+# Underscores and numbers in short names
+API_V1 = API::V1
+CACHE2 = Cache::RedisCache
+```
+
+## Migrating from v1.x to v2.0
+
+LazyNames v2.0 removes YAML support in favor of plain Ruby configuration.
+
+**Upgrading from v1.x?** See the complete [Migration Guide](MIGRATION_FROM_V1.md) for:
+- Automated conversion script
+- Step-by-step instructions
+- Troubleshooting tips
+- New features in v2.0
 
 ## Development
 

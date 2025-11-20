@@ -11,10 +11,10 @@ Gem::Specification.new do |spec|
   spec.email = ['evdev34@gmail.com']
 
   spec.description = <<~DESC
-    lazy_names is ruby programmer friend. You can save your time not typing long
-    error-phone constants/classes but defining short and nice versions of them.
+    lazy_names is ruby programmer friend. Define short aliases for long constant names using plain Ruby.
+    Save your time not typing long constants/classes by defining short and intuitive versions of them.
   DESC
-  spec.summary = 'Define short constants to frequently used classes/constants'
+  spec.summary = 'Define short aliases for long constant names using plain Ruby'
   spec.homepage = 'https://github.com/zhisme/lazy_names'
   spec.license = 'MIT'
 
