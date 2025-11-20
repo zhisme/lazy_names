@@ -143,49 +143,13 @@ CACHE2 = Cache::RedisCache
 
 ## Migrating from v1.x to v2.0
 
-LazyNames v2.0 removes YAML support in favor of plain Ruby.
+LazyNames v2.0 removes YAML support in favor of plain Ruby configuration.
 
-### Quick Conversion
-
-**Old** (`.lazy_names.yml`):
-```yaml
----
-definitions:
-  'Models::User': 'MU'
-  'Services::EmailSender': 'SES'
-```
-
-**New** (`.lazy_names.rb`):
-```ruby
-MU = Models::User
-SES = Services::EmailSender
-```
-
-### Conversion Script
-
-Save this as `convert_to_v2.rb` and run it in your project directory:
-
-```ruby
-#!/usr/bin/env ruby
-require 'yaml'
-
-yaml = YAML.load_file('.lazy_names.yml')
-definitions = yaml['definitions'] || yaml.values.first['definitions']
-
-File.open('.lazy_names.rb', 'w') do |f|
-  f.puts "# Converted from .lazy_names.yml"
-  definitions.each do |full, short|
-    f.puts "#{short} = #{full}"
-  end
-end
-
-puts "✓ Converted to .lazy_names.rb"
-```
-
-Then:
-1. Run the script: `ruby convert_to_v2.rb`
-2. Review `.lazy_names.rb`
-3. Delete `.lazy_names.yml`
+**Upgrading from v1.x?** See the complete [Migration Guide](MIGRATION_FROM_V1.md) for:
+- Automated conversion script
+- Step-by-step instructions
+- Troubleshooting tips
+- New features in v2.0
 
 ## Development
 
