@@ -2,7 +2,7 @@
 
 module LazyNames
   class LineValidator
-    ASSIGNMENT_PATTERN = /\A\s*([A-Z][A-Z0-9_]*)\s*=\s*([A-Z][A-Za-z0-9_:]*)\s*\z/
+    ASSIGNMENT_PATTERN = /\A\s*([A-Z][A-Z0-9_]*)\s*=\s*([A-Z][A-Za-z0-9_:]*)\s*\z/.freeze
 
     class ValidationResult
       attr_reader :valid, :short_name, :full_constant, :error
@@ -23,14 +23,12 @@ module LazyNames
       return skip_result if skip_line?(line)
 
       match = line.match(ASSIGNMENT_PATTERN)
-      return invalid_result("Invalid syntax") unless match
+      return invalid_result('Invalid syntax') unless match
 
       short_name = match[1]
       full_constant = match[2]
 
-      unless constant_exists?(full_constant)
-        return invalid_result("Constant #{full_constant} not found")
-      end
+      return invalid_result("Constant #{full_constant} not found") unless constant_exists?(full_constant)
 
       ValidationResult.new(
         valid: true,

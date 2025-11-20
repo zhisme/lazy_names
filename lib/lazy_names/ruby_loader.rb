@@ -66,8 +66,8 @@ module LazyNames
     end
 
     def log_summary
-      Logger.info("Loaded #{@loaded_count} definitions") if @loaded_count > 0
-      Logger.warn("Skipped #{@error_count} invalid lines") if @error_count > 0
+      Logger.info("Loaded #{@loaded_count} definitions") if @loaded_count.positive?
+      Logger.warn("Skipped #{@error_count} invalid lines") if @error_count.positive?
     end
   end
 end

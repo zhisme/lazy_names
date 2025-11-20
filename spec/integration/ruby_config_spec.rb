@@ -134,8 +134,8 @@ RSpec.describe 'Ruby configuration integration' do
     LazyNames.load_definitions!
 
     expect(loaded_constants).to eq([
-      'TU = TestApp::Models::User',
-      'TM = TestApp::Services::Mailer'
-    ])
+                                     'TU = TestApp::Models::User',
+                                     'TM = TestApp::Services::Mailer'
+                                   ])
   end
 end
