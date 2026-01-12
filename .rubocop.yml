@@ -73,3 +73,7 @@ RSpec/AnyInstance:
 Security/Eval:
   Exclude:
     - spec/**/*.rb
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - .lazy_names.tt.rb
