@@ -17,11 +17,11 @@ module LazyNames
     def load!(binding)
       path = find_config_file
       unless path
-        Logger.warn("No #{CONFIG_FILE} found")
+        Kernel.warn("No #{CONFIG_FILE} found")
         return
       end
 
-      Logger.info("Loading definitions from #{path}")
+      puts "Loading definitions from #{path}"
 
       File.readlines(path).each_with_index do |line, index|
         line_number = index + 1
@@ -50,14 +50,14 @@ module LazyNames
         eval_line(line, binding)
         @loaded_count += 1
       elsif result.error
-        Logger.warn("Line #{line_number}: #{result.error} - #{line.strip}")
+        Kernel.warn("Line #{line_number}: #{result.error} - #{line.strip}")
         @error_count += 1
       else
         # Blank line or comment - skip silently
         @skipped_count += 1
       end
     rescue StandardError => e
-      Logger.warn("Line #{line_number}: #{e.message}")
+      Kernel.warn("Line #{line_number}: #{e.message}")
       @error_count += 1
     end
 
@@ -66,8 +66,8 @@ module LazyNames
     end
 
     def log_summary
-      Logger.info("Loaded #{@loaded_count} definitions") if @loaded_count.positive?
-      Logger.warn("Skipped #{@error_count} invalid lines") if @error_count.positive?
+      puts "Loaded #{@loaded_count} definitions" if @loaded_count.positive?
+      Kernel.warn("Skipped #{@error_count} invalid lines") if @error_count.positive?
     end
   end
 end

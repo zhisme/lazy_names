@@ -53,8 +53,8 @@ RSpec.describe 'Ruby configuration integration' do
     Object.send(:remove_const, :TU) if defined?(TU)
     Object.send(:remove_const, :TM) if defined?(TM)
 
-    expect(LazyNames::Logger).to receive(:warn).with(/Nonexistent::Class not found/).ordered
-    expect(LazyNames::Logger).to receive(:warn).with(/Skipped 1 invalid lines/).ordered
+    expect(Kernel).to receive(:warn).with(/Nonexistent::Class not found/).ordered
+    expect(Kernel).to receive(:warn).with(/Skipped 1 invalid lines/).ordered
 
     LazyNames.load_definitions!(binding)
 
@@ -82,7 +82,7 @@ RSpec.describe 'Ruby configuration integration' do
   end
 
   it 'warns when no config file is found' do
-    expect(LazyNames::Logger).to receive(:warn).with(/No \.lazy_names\.rb found/)
+    expect(Kernel).to receive(:warn).with(/No \.lazy_names\.rb found/)
 
     LazyNames.load_definitions!
   end
@@ -107,8 +107,8 @@ RSpec.describe 'Ruby configuration integration' do
       FAKE = This::Does::Not::Exist
     RUBY
 
-    expect(LazyNames::Logger).to receive(:warn).with(/Line 1.*This::Does::Not::Exist not found/).ordered
-    expect(LazyNames::Logger).to receive(:warn).with(/Skipped 1 invalid lines/).ordered
+    expect(Kernel).to receive(:warn).with(/Line 1.*This::Does::Not::Exist not found/).ordered
+    expect(Kernel).to receive(:warn).with(/Skipped 1 invalid lines/).ordered
 
     LazyNames.load_definitions!(binding)
 

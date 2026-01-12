@@ -32,7 +32,7 @@ RSpec.describe LazyNames::RubyLoader do
 
         loader = described_class.new
         allow(loader).to receive(:find_config_file).and_return(temp_file.path)
-        allow(LazyNames::Logger).to receive(:info)
+        allow(loader).to receive(:puts)
 
         test_binding = binding
         loader.load!(test_binding)
@@ -54,7 +54,7 @@ RSpec.describe LazyNames::RubyLoader do
 
         loader = described_class.new
         allow(loader).to receive(:find_config_file).and_return(temp_file.path)
-        allow(LazyNames::Logger).to receive(:info)
+        allow(loader).to receive(:puts)
 
         expect { loader.load!(binding) }.not_to raise_error
       end
@@ -68,8 +68,8 @@ RSpec.describe LazyNames::RubyLoader do
         loader = described_class.new
         allow(loader).to receive(:find_config_file).and_return(temp_file.path)
 
-        expect(LazyNames::Logger).to receive(:info).with(/Loading definitions from/)
-        expect(LazyNames::Logger).to receive(:info).with(/Loaded 1 definitions/)
+        expect(loader).to receive(:puts).with(/Loading definitions from/)
+        expect(loader).to receive(:puts).with(/Loaded 1 definitions/)
 
         loader.load!(binding)
       end
@@ -86,10 +86,10 @@ RSpec.describe LazyNames::RubyLoader do
 
         loader = described_class.new
         allow(loader).to receive(:find_config_file).and_return(temp_file.path)
-        allow(LazyNames::Logger).to receive(:info)
+        allow(loader).to receive(:puts)
 
-        expect(LazyNames::Logger).to receive(:warn).with(/Line 2.*Nonexistent::Constant not found/)
-        expect(LazyNames::Logger).to receive(:warn).with(/Skipped 1 invalid lines/)
+        expect(Kernel).to receive(:warn).with(/Line 2.*Nonexistent::Constant not found/)
+        expect(Kernel).to receive(:warn).with(/Skipped 1 invalid lines/)
 
         test_binding = binding
         loader.load!(test_binding)
@@ -111,10 +111,10 @@ RSpec.describe LazyNames::RubyLoader do
 
         loader = described_class.new
         allow(loader).to receive(:find_config_file).and_return(temp_file.path)
-        allow(LazyNames::Logger).to receive(:info)
+        allow(loader).to receive(:puts)
 
-        expect(LazyNames::Logger).to receive(:warn).with(/Line 2.*Invalid syntax/).ordered
-        expect(LazyNames::Logger).to receive(:warn).with(/Skipped 1 invalid lines/).ordered
+        expect(Kernel).to receive(:warn).with(/Line 2.*Invalid syntax/).ordered
+        expect(Kernel).to receive(:warn).with(/Skipped 1 invalid lines/).ordered
 
         loader.load!(binding)
       end
@@ -128,8 +128,8 @@ RSpec.describe LazyNames::RubyLoader do
 
         loader = described_class.new
         allow(loader).to receive(:find_config_file).and_return(temp_file.path)
-        allow(LazyNames::Logger).to receive(:info)
-        allow(LazyNames::Logger).to receive(:warn)
+        allow(loader).to receive(:puts)
+        allow(Kernel).to receive(:warn)
 
         expect { loader.load!(binding) }.not_to raise_error
       end
@@ -140,7 +140,7 @@ RSpec.describe LazyNames::RubyLoader do
         loader = described_class.new
         allow(loader).to receive(:find_config_file).and_return(nil)
 
-        expect(LazyNames::Logger).to receive(:warn).with(/No \.lazy_names\.rb found/)
+        expect(Kernel).to receive(:warn).with(/No \.lazy_names\.rb found/)
 
         loader.load!(binding)
       end
@@ -148,7 +148,7 @@ RSpec.describe LazyNames::RubyLoader do
       it 'does not raise error when no config file found' do
         loader = described_class.new
         allow(loader).to receive(:find_config_file).and_return(nil)
-        allow(LazyNames::Logger).to receive(:warn)
+        allow(Kernel).to receive(:warn)
 
         expect { loader.load!(binding) }.not_to raise_error
       end
@@ -213,7 +213,7 @@ RSpec.describe LazyNames::RubyLoader do
       allow(LazyNames::LineValidator).to receive(:validate).and_return(
         LazyNames::LineValidator::ValidationResult.new(valid: false, error: 'Some error')
       )
-      allow(LazyNames::Logger).to receive(:warn)
+      allow(Kernel).to receive(:warn)
 
       loader.send(:process_line, 'invalid line', 1, binding)
 
