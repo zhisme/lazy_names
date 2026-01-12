@@ -89,12 +89,12 @@ CAVUC = Controllers::API::V1::UsersController
 
 LazyNames looks for configuration in this order:
 
-1. `./.lazy_names.rb` (project-specific)
-2. `~/.lazy_names.rb` (global)
+1. `./.lazy_names.rb` (project-specific) — **recommended**
+2. `~/.lazy_names.rb` (global fallback)
 
-### Project-Specific Configuration
+### Project-Specific Configuration (Recommended)
 
-For project-specific shortcuts, create `.lazy_names.rb` in your project root:
+**This is the preferred approach.** Create `.lazy_names.rb` in your project root:
 
 ```ruby
 # myproject/.lazy_names.rb
@@ -102,21 +102,34 @@ MUCC = Models::Users::CreditCard
 SPP = Services::PaymentProcessor
 ```
 
-Don't forget to add it to `.gitignore`:
+Why project-specific files are better:
+- Version controlled with your project (or gitignored for personal shortcuts)
+- Explicit about what's loaded — no surprises
+- Each project has exactly the shortcuts it needs
+- No conflicts between projects
+
+Don't forget to add it to `.gitignore` if you don't want to share:
 ```sh
 echo '.lazy_names.rb' >> .gitignore
 ```
 
 ### Global Configuration
 
-For shortcuts across all projects, create `~/.lazy_names.rb` in your home directory:
+For shortcuts that work across multiple projects, create `~/.lazy_names.rb` in your home directory.
+
+**Important:** Use `if defined?()` guards since constants vary between projects:
 
 ```ruby
 # ~/.lazy_names.rb
-# Add constants you use across multiple projects
-AR = ActiveRecord
-AM = ActionMailer
+# Generic Rails shortcuts (usually available)
+AR = ActiveRecord if defined?(ActiveRecord)
+AM = ActionMailer if defined?(ActionMailer)
+
+# Only defined if these exist in the current project
+MU = Models::User if defined?(Models::User)
 ```
+
+**Note:** v2.0 intentionally removed namespace/project scoping that existed in v1.x YAML configs. The `if defined?()` pattern is simpler and achieves the same result without magic.
 
 ### Validation
 

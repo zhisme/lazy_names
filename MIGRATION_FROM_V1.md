@@ -97,7 +97,7 @@ puts "✓ Converted to .lazy_names.rb"
 
 ## Global Configuration Migration
 
-If you have a global configuration in `~/.lazy_names.yml`:
+If you have a global configuration in `~/.lazy_names.yml` with namespace/project scoping:
 
 ### Before
 
@@ -112,22 +112,46 @@ another_project:
     'API::Client': 'AC'
 ```
 
-### After
+### Namespace Scoping Is Intentionally Removed
 
-You have two options:
+v2.0 **does not support** namespace/project scoping in global config files. This was a deliberate decision:
 
-**Option 1**: Combine into one file (simpler)
+- **It was YAML-induced complexity.** YAML encourages nested structures, but Ruby doesn't need this abstraction.
+- **Project detection is fragile.** Matching project names to directories adds magic that can break.
+- **Project-specific files are better.** Each project having its own `.lazy_names.rb` is more explicit and maintainable.
+
+### After: Use Project-Specific Files (Recommended)
+
+**This is the preferred migration path.** Create `.lazy_names.rb` in each project directory:
+
+```ruby
+# my_project/.lazy_names.rb
+MU = Models::User
+```
+
+```ruby
+# another_project/.lazy_names.rb
+AC = API::Client
+```
+
+Benefits:
+- Version controlled with each project
+- Explicit about what's loaded
+- No surprises or magic detection
+- Easy to understand and maintain
+
+### Alternative: Global File with Guards
+
+If you prefer a single global file, use `if defined?()` guards:
 
 **~/.lazy_names.rb**:
 ```ruby
-# Definitions that work across projects
+# Only defined if the constant exists in the current project
 MU = Models::User if defined?(Models::User)
 AC = API::Client if defined?(API::Client)
 ```
 
-**Option 2**: Use project-specific files
-
-Create `.lazy_names.rb` in each project directory instead of using a global file.
+This achieves the same result as namespace scoping but is simpler and more transparent.
 
 ## New Features in v2.0
 
